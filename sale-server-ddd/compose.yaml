@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  postgres_db:
+    image: 'postgres:16-alpine'
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=demo_postgres
+      - POSTGRES_PASSWORD=demo_postgres
+      - POSTGRES_DB=demo
+
+  redis_db:
+    image: 'redis:7.2.5-alpine'
+    ports:
+      - '6379:6379'
+    command: redis-server --save 60 1 --loglevel warning --requirepass demo_redis
+
+  rabbitmq_msg:
+    image: 'rabbitmq:3.13-alpine'
+    ports:
+      - '5672:5672'
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbitmq_demo
+      - RABBITMQ_DEFAULT_PASS=rabbitmq_demo
+

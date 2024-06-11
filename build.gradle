@@ -1,0 +1,6 @@
+subprojects {
+    apply plugin: 'java'
+    java {
+        modularity.inferModulePath = true
+    }
+}

@@ -1,0 +1,2 @@
+rootProject.name = 'sale-server'
+include("sale-server-ddd", "sale-server-reactive", "sale-server-mvc")

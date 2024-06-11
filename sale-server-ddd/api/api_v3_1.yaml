@@ -1,0 +1,67 @@
+openapi: 3.1.0
+info:
+  title: Demo Sale
+  description: |-
+    Specification for Demo Sale Application based on OpenAPI 3.1 specification.
+  contact:
+    email: josue270193@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Github
+  url: http://github.com/josue270193
+servers:
+  - url: http://localhost:8080/api
+tags:
+  - name: user
+    description: Operations about user
+paths:
+  /user:
+    get:
+      tags:
+        - user
+      summary: Get all
+      description: Get all
+      operationId: getUser
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/UserResponse'
+      security:
+        - demo_auth_jwt: []
+components:
+  schemas:
+    UserResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int32
+    ApiResponse:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      xml:
+        name: '##default'
+  securitySchemes:
+    demo_auth_jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
