@@ -1,0 +1,17 @@
+app:
+  public-urls:
+    - "/api/public/**"
+
+spring:
+  application:
+    name: sale-server
+  docker:
+    compose:
+      enabled: true
+      file: compose.yaml
+      lifecycle-management: start_and_stop
+
+server:
+  port: 8080
+  error:
+    include-stacktrace: never

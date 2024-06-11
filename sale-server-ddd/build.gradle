@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.0'
+    id 'io.spring.dependency-management' version '1.1.5'
+    id 'org.openapi.generator' version '7.5.0'
+}
+
+group = 'com.josue'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-docker-compose'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation "io.swagger.core.v3:swagger-annotations:2.2.20"
+
+    runtimeOnly 'org.postgresql:postgresql'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+openApiGenerate {
+    var output = layout.buildDirectory.dir("generated/api")
+
+    generatorName = "spring"
+    inputSpec = "$projectDir.path/api/api_v3_1.yaml".toString()
+    outputDir = output.get().asFile.path
+    apiPackage = "com.josue.saleserver.api"
+    invokerPackage = "com.josue.saleserver.invoker"
+    modelPackage = "com.josue.saleserver.model"
+    modelNameSuffix = 'DTO'
+    configOptions = [
+            'openApiNullable': 'false',
+            'interfaceOnly': 'true',
+            'useSpringBoot3': 'true',
+//            'reactive': 'true',
+            'useOptional': 'true',
+            'generateBuilders': 'true',
+    ]
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir("$buildDir/generated/api/src/main/java")
+        }
+    }
+}
+
+
+compileJava.dependsOn clean, tasks.openApiGenerate
