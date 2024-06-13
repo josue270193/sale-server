@@ -3,7 +3,6 @@ package com.josue.saleserverddd.domain.service;
 import com.josue.saleserverddd.domain.entities.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
@@ -13,7 +12,7 @@ public interface UserService {
 
     boolean delete(Long id);
 
-    Optional<User> getById(Long id);
+    User getById(Long id);
 
     List<User> getAll();
 

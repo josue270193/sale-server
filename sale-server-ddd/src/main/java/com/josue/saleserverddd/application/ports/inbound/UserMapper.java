@@ -8,8 +8,9 @@ import java.util.Optional;
 
 @Component
 public class UserMapper {
-    public UserResponseDTO toResponse(Optional<User> domain) {
-        return domain.map(user -> {
+    public UserResponseDTO toResponse(User domain) {
+        return Optional.ofNullable(domain)
+                .map(user -> {
                     return new UserResponseDTO()
                             .id(user.id() != null ? user.id().intValue() : null);
                 })

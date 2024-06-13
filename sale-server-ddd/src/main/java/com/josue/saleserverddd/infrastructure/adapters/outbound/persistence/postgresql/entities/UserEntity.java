@@ -6,8 +6,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import static com.josue.saleserverddd.infrastructure.adapters.outbound.persistence.postgresql.entities.BaseEntity.SALE_SCHEME;
+
 @Entity
-@Table(name = "USERS")
+@Table(name = "USERS", schema = SALE_SCHEME)
 public class UserEntity {
 
     @Id

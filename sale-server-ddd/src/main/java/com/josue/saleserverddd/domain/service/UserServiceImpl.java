@@ -1,10 +1,11 @@
 package com.josue.saleserverddd.domain.service;
 
 import com.josue.saleserverddd.domain.entities.User;
+import com.josue.saleserverddd.domain.exceptions.NotFoundEntityException;
 import com.josue.saleserverddd.domain.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 public class UserServiceImpl implements UserService {
 
@@ -30,8 +31,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getById(Long id) {
-        return userRepository.getById(id);
+    public User getById(Long id) {
+        return userRepository.getById(id)
+                .orElseThrow(() -> new NotFoundEntityException("user", Map.of("id", id)));
     }
 
     @Override
