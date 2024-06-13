@@ -10,6 +10,8 @@ spring:
       enabled: true
       file: compose.yaml
       lifecycle-management: start_and_stop
+  flyway:
+    locations: classpath:db/migration/{vendor}
 
 server:
   port: 8080
