@@ -9,7 +9,7 @@ spring:
     compose:
       enabled: true
       file: compose.yaml
-      lifecycle-management: start_and_stop
+      lifecycle-management: start_only
   flyway:
     locations: classpath:db/migration/{vendor}
 
