@@ -12,6 +12,13 @@ spring:
       lifecycle-management: start_only
   flyway:
     locations: classpath:db/migration/{vendor}
+  data:
+    redis:
+      timeout: ${REDIS_TIMEOUT:4000}
+      password: ${REDIS_PASSWORD:demo_redis}
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
 
 server:
   port: 8080

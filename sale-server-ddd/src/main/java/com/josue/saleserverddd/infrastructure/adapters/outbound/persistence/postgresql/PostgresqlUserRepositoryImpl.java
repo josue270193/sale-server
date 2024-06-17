@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class UserRepositoryImpl implements UserRepository {
+public class PostgresqlUserRepositoryImpl implements UserRepository {
 
-    private final SpringUserRepository userRepository;
+    private final SpringPostgresqlUserRepository userRepository;
 
-    public UserRepositoryImpl(SpringUserRepository userRepository) {
+    public PostgresqlUserRepositoryImpl(SpringPostgresqlUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
