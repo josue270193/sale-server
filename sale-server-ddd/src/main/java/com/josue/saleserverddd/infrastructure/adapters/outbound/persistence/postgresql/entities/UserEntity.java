@@ -1,7 +1,10 @@
 package com.josue.saleserverddd.infrastructure.adapters.outbound.persistence.postgresql.entities;
 
 import com.josue.saleserverddd.domain.entities.User;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import static com.josue.saleserverddd.infrastructure.adapters.outbound.persistence.postgresql.entities.BaseEntity.SALE_SCHEME;
 
@@ -10,8 +13,7 @@ import static com.josue.saleserverddd.infrastructure.adapters.outbound.persisten
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(nullable = false)
     private String name;
@@ -29,11 +31,11 @@ public class UserEntity {
 
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

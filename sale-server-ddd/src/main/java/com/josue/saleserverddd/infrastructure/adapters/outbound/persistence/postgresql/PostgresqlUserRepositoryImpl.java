@@ -3,11 +3,13 @@ package com.josue.saleserverddd.infrastructure.adapters.outbound.persistence.pos
 import com.josue.saleserverddd.domain.entities.User;
 import com.josue.saleserverddd.domain.repository.UserRepository;
 import com.josue.saleserverddd.infrastructure.adapters.outbound.persistence.postgresql.entities.UserEntity;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Profile("postgresql")
 @Component
 public class PostgresqlUserRepositoryImpl implements UserRepository {
 
@@ -33,13 +35,13 @@ public class PostgresqlUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(String id) {
         userRepository.deleteById(id);
         return true;
     }
 
     @Override
-    public Optional<User> getById(Long id) {
+    public Optional<User> getById(String id) {
         return userRepository.findById(id)
                 .map(UserEntity::toDomain);
     }

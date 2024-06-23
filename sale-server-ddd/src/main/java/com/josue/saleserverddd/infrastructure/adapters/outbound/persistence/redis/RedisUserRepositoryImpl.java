@@ -3,12 +3,14 @@ package com.josue.saleserverddd.infrastructure.adapters.outbound.persistence.red
 import com.josue.saleserverddd.domain.entities.User;
 import com.josue.saleserverddd.domain.repository.UserRepository;
 import com.josue.saleserverddd.infrastructure.adapters.outbound.persistence.redis.entities.UserEntity;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Profile("redis")
 @Component
 public class RedisUserRepositoryImpl implements UserRepository {
 
@@ -22,7 +24,7 @@ public class RedisUserRepositoryImpl implements UserRepository {
     public User create(User user) {
         var entity = new UserEntity(user);
         redisTemplate.opsForValue()
-                .set(entity.getId().toString(), entity);
+                .set(entity.getId(), entity);
         return entity.toDomain();
     }
 
@@ -30,22 +32,22 @@ public class RedisUserRepositoryImpl implements UserRepository {
     public User edit(User user) {
         var entity = new UserEntity(user);
         redisTemplate.opsForValue()
-                .set(entity.getId().toString(), entity);
+                .set(entity.getId(), entity);
         return entity.toDomain();
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(String id) {
         redisTemplate.opsForValue()
-                .getAndDelete(id.toString());
+                .getAndDelete(id);
         return true;
     }
 
     @Override
-    public Optional<User> getById(Long id) {
+    public Optional<User> getById(String id) {
         return Optional.ofNullable(
                         redisTemplate.opsForValue()
-                                .get(id.toString())
+                                .get(id)
                 )
                 .map(UserEntity::toDomain);
     }

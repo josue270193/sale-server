@@ -32,7 +32,7 @@ public class UserRestController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<UserResponseDTO> getUserById(Long userId) {
+    public ResponseEntity<UserResponseDTO> getUserById(String userId) {
         var domain = userService.getById(userId);
         return ResponseEntity.ok(
                 userMapper.toResponse(domain)
@@ -50,11 +50,18 @@ public class UserRestController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<UserResponseDTO> editUser(Long userId, UserRequestDTO userRequestDTO) {
+    public ResponseEntity<UserResponseDTO> editUser(String userId, UserRequestDTO userRequestDTO) {
         var domain = userService.edit(
                 userMapper.toDomain(userId, userRequestDTO)
         );
         return ResponseEntity
                 .ok(userMapper.toResponse(domain));
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteUser(String userId) {
+        var result = userService.delete(userId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .build();
     }
 }

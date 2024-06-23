@@ -8,7 +8,7 @@ import java.io.Serializable;
 @RedisHash("user")
 public class UserEntity implements Serializable {
 
-    private Long id;
+    private String id;
     private String name;
     private String lastname;
 
@@ -22,11 +22,11 @@ public class UserEntity implements Serializable {
 
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

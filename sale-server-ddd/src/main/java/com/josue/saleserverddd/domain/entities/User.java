@@ -1,7 +1,7 @@
 package com.josue.saleserverddd.domain.entities;
 
 public record User(
-        Long id,
+        String id,
         String name,
         String lastname,
         UserStatus status
@@ -12,11 +12,12 @@ public record User(
         }
     }
 
-    public User(Long id, String name, String lastname) {
+    public User(String id, String name, String lastname) {
         this(id, name, lastname, null);
     }
 
     public User(String name, String lastname) {
         this(null, name, lastname, null);
     }
+
 }

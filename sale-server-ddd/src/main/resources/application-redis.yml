@@ -1,0 +1,9 @@
+app:
+  database:
+    redis:
+      enabled: true
+
+management:
+  health:
+    redis:
+      enabled: true

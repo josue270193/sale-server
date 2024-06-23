@@ -12,7 +12,7 @@ public class UserMapper {
     public UserResponseDTO toResponse(User domain) {
         return Optional.ofNullable(domain)
                 .map(user -> new UserResponseDTO()
-                        .id(user.id() != null ? user.id().intValue() : null)
+                        .id(user.id())
                         .name(user.name())
                         .lastname(user.lastname())
                 )
@@ -23,7 +23,7 @@ public class UserMapper {
         return new User(userRequestDTO.getName(), userRequestDTO.getLastname());
     }
 
-    public User toDomain(Long userId, UserRequestDTO userRequestDTO) {
+    public User toDomain(String userId, UserRequestDTO userRequestDTO) {
         return new User(userId, userRequestDTO.getName(), userRequestDTO.getLastname());
     }
 }

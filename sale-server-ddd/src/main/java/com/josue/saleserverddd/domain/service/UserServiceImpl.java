@@ -6,6 +6,7 @@ import com.josue.saleserverddd.domain.repository.UserRepository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class UserServiceImpl implements UserService {
 
@@ -17,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
+        user = new User(UUID.randomUUID().toString(), user.name(), user.lastname(), user.status());
         return userRepository.create(user);
     }
 
@@ -26,12 +28,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(String id) {
         return userRepository.delete(id);
     }
 
     @Override
-    public User getById(Long id) {
+    public User getById(String id) {
         return userRepository.getById(id)
                 .orElseThrow(() -> new NotFoundEntityException("user", Map.of("id", id)));
     }

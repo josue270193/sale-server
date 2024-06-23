@@ -1,0 +1,8 @@
+app:
+  database:
+    postgresql:
+      enabled: true
+
+spring:
+  flyway:
+    enabled: true

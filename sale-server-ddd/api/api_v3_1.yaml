@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
-  title: Demo Sale
+  title: Sale Server Application
   description: |-
-    Specification for Demo Sale Application based on OpenAPI 3.1 specification.
+    Specification for Sale Server Application based on OpenAPI 3.1 specification.
   contact:
     email: josue270193@gmail.com
   version: 1.0.0
@@ -19,8 +19,8 @@ paths:
     get:
       tags:
         - user
-      summary: Get all user registered
-      description: Get all user registered
+      summary: Retrieve all users registered.
+      description: Retrieve all users registered.
       operationId: getAllUser
       responses:
         '200':
@@ -36,18 +36,18 @@ paths:
     post:
       tags:
         - user
-      summary: Add a new user
-      description: Add a new user
+      summary: Create a new user.
+      description: Create a new user.
       operationId: addUser
       requestBody:
-        description: Create a new user
+        description: Parameters for the new user.
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UserRequest'
         required: true
       responses:
-        '200':
+        '201':
           description: Successful operation
           content:
             application/json:
@@ -61,17 +61,16 @@ paths:
     get:
       tags:
         - user
-      summary: Get user registered by id
-      description: Get user registered by id
+      summary: Get an user registered by id.
+      description: Get an user registered by id.
       operationId: getUserById
       parameters:
         - name: userId
           in: path
-          description: Id of user to return
+          description: Id of user to return.
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       responses:
         '200':
           description: Successful operation
@@ -92,19 +91,18 @@ paths:
     put:
       tags:
         - user
-      summary: Edit a user
-      description: Edit a user
+      summary: Edit an existence user
+      description: Edit an existence user
       operationId: editUser
       parameters:
         - name: userId
           in: path
-          description: Id of user to return
+          description: Id of user to be edited.
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
       requestBody:
-        description: Modify a registered user
+        description: Modify a registered user.
         content:
           application/json:
             schema:
@@ -120,7 +118,24 @@ paths:
                 $ref: '#/components/schemas/UserResponse'
       security:
         - demo_auth_jwt: []
-
+    delete:
+      tags:
+        - user
+      summary: Remove an existence user.
+      description: Remove an existence user.
+      operationId: deleteUser
+      parameters:
+        - name: userId
+          in: path
+          description: Id of user to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Successful operation
+      security:
+        - demo_auth_jwt: []
 components:
   schemas:
     UserRequest:
@@ -141,8 +156,7 @@ components:
         - lastname
       properties:
         id:
-          type: integer
-          format: int32
+          type: string
         name:
           type: string
         lastname:

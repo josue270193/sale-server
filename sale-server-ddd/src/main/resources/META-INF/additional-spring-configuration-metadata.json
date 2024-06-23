@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "app.database.postgresql.enabled",
+      "type": "java.lang.String",
+      "description": "Enable use of postgresql database on the application."
+    },
+    {
+      "name": "app.database.redis.enabled",
+      "type": "java.lang.String",
+      "description": "Enable use of redis database on the application."
+    }
+  ] }

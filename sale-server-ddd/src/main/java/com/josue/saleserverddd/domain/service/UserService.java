@@ -10,9 +10,9 @@ public interface UserService {
 
     User edit(User user);
 
-    boolean delete(Long id);
+    boolean delete(String id);
 
-    User getById(Long id);
+    User getById(String id);
 
     List<User> getAll();
 

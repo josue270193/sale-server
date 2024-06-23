@@ -11,9 +11,9 @@ public interface UserRepository {
 
     User edit(User user);
 
-    boolean delete(Long id);
+    boolean delete(String id);
 
-    Optional<User> getById(Long id);
+    Optional<User> getById(String id);
 
     List<User> getAll();
 
