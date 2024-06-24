@@ -28,7 +28,16 @@ spring:
       password: ${REDIS_PASSWORD:demo_redis}
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+
 management:
   health:
     redis:
       enabled: false
+logging:
+  level:
+    root: info
+    'com.josue.saleserverddd.infrastructure.adapters.outbound.rest.openfeign.UserFeignClient': debug

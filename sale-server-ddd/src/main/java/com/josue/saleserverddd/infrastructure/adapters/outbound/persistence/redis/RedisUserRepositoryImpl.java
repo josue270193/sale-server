@@ -8,22 +8,23 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Profile("redis")
 @Component
 public class RedisUserRepositoryImpl implements UserRepository {
 
-    private final RedisTemplate<String, UserEntity> redisTemplate;
+    private final RedisTemplate<String, UserEntity> userRedisTemplate;
 
-    public RedisUserRepositoryImpl(RedisTemplate<String, UserEntity> redisTemplate) {
-        this.redisTemplate = redisTemplate;
+    public RedisUserRepositoryImpl(RedisTemplate<String, UserEntity> userRedisTemplate) {
+        this.userRedisTemplate = userRedisTemplate;
     }
 
     @Override
     public User create(User user) {
         var entity = new UserEntity(user);
-        redisTemplate.opsForValue()
+        userRedisTemplate.opsForValue()
                 .set(entity.getId(), entity);
         return entity.toDomain();
     }
@@ -31,14 +32,14 @@ public class RedisUserRepositoryImpl implements UserRepository {
     @Override
     public User edit(User user) {
         var entity = new UserEntity(user);
-        redisTemplate.opsForValue()
+        userRedisTemplate.opsForValue()
                 .set(entity.getId(), entity);
         return entity.toDomain();
     }
 
     @Override
     public boolean delete(String id) {
-        redisTemplate.opsForValue()
+        userRedisTemplate.opsForValue()
                 .getAndDelete(id);
         return true;
     }
@@ -46,7 +47,7 @@ public class RedisUserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> getById(String id) {
         return Optional.ofNullable(
-                        redisTemplate.opsForValue()
+                        userRedisTemplate.opsForValue()
                                 .get(id)
                 )
                 .map(UserEntity::toDomain);
@@ -54,7 +55,12 @@ public class RedisUserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> getAll() {
-        return List.of();
+        return Objects.requireNonNull(userRedisTemplate.keys("*"))
+                .stream()
+                .map(key -> userRedisTemplate.opsForValue().get(key))
+                .filter(Objects::nonNull)
+                .map(UserEntity::toDomain)
+                .toList();
     }
 
 }

@@ -14,11 +14,9 @@ import java.util.List;
 public class UserRestController implements UserApi {
 
     private final UserService userService;
-    private final UserMapper userMapper;
 
-    public UserRestController(UserService userService, UserMapper userMapper) {
+    public UserRestController(UserService userService) {
         this.userService = userService;
-        this.userMapper = userMapper;
     }
 
 
@@ -26,7 +24,7 @@ public class UserRestController implements UserApi {
     public ResponseEntity<List<UserResponseDTO>> getAllUser() {
         var response = userService.getAll()
                 .stream()
-                .map(this.userMapper::toResponse)
+                .map(UserMapper::toResponse)
                 .toList();
         return ResponseEntity.ok(response);
     }
@@ -35,27 +33,27 @@ public class UserRestController implements UserApi {
     public ResponseEntity<UserResponseDTO> getUserById(String userId) {
         var domain = userService.getById(userId);
         return ResponseEntity.ok(
-                userMapper.toResponse(domain)
+                UserMapper.toResponse(domain)
         );
     }
 
     @Override
     public ResponseEntity<UserResponseDTO> addUser(UserRequestDTO userRequestDTO) {
         var domain = userService.create(
-                userMapper.toDomain(userRequestDTO)
+                UserMapper.toDomain(userRequestDTO)
         );
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(userMapper.toResponse(domain));
+                .body(UserMapper.toResponse(domain));
     }
 
     @Override
     public ResponseEntity<UserResponseDTO> editUser(String userId, UserRequestDTO userRequestDTO) {
         var domain = userService.edit(
-                userMapper.toDomain(userId, userRequestDTO)
+                UserMapper.toDomain(userId, userRequestDTO)
         );
         return ResponseEntity
-                .ok(userMapper.toResponse(domain));
+                .ok(UserMapper.toResponse(domain));
     }
 
     @Override

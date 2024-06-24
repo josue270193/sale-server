@@ -22,7 +22,6 @@ public class PostgresqlUserRepositoryImpl implements UserRepository {
     @Override
     public User create(User user) {
         var entity = new UserEntity(user);
-        entity.setId(null);
         entity = userRepository.save(entity);
         return entity.toDomain();
     }

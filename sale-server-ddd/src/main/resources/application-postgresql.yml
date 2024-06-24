@@ -6,3 +6,10 @@ app:
 spring:
   flyway:
     enabled: true
+  cloud:
+    openfeign:
+      client:
+        config:
+          userClient:
+            url: http://localhost:8091
+            logger-level: full
