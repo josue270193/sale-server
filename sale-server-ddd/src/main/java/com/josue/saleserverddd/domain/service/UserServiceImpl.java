@@ -2,6 +2,7 @@ package com.josue.saleserverddd.domain.service;
 
 import com.josue.saleserverddd.application.ports.inbound.UserMapper;
 import com.josue.saleserverddd.domain.entities.User;
+import com.josue.saleserverddd.domain.events.UserNotification;
 import com.josue.saleserverddd.domain.exceptions.NotFoundEntityException;
 import com.josue.saleserverddd.domain.repository.UserRepository;
 import com.josue.saleserverddd.infrastructure.adapters.outbound.rest.openfeign.UserFeignClient;
@@ -15,26 +16,40 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserFeignClient userFeignClient;
+    private final UserNotification userNotification;
 
-    public UserServiceImpl(UserRepository userRepository, UserFeignClient userFeignClient) {
+    public UserServiceImpl(UserRepository userRepository,
+                           UserFeignClient userFeignClient,
+                           UserNotification userNotification
+    ) {
         this.userRepository = userRepository;
         this.userFeignClient = userFeignClient;
+        this.userNotification = userNotification;
     }
 
     @Override
     public User create(User user) {
         user = new User(UUID.randomUUID().toString(), user.name(), user.lastname(), user.status());
-        return userRepository.create(user);
+        user = userRepository.create(user);
+
+        userNotification.onCreated(user);
+        return user;
     }
 
     @Override
     public User edit(User user) {
-        return userRepository.edit(user);
+        user = userRepository.edit(user);
+
+        userNotification.onEdited(user);
+        return user;
     }
 
     @Override
     public boolean delete(String id) {
-        return userRepository.delete(id);
+        var result = userRepository.delete(id);
+
+        userNotification.onDeleted(id);
+        return result;
     }
 
     @Override

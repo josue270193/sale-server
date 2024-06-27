@@ -1,6 +1,7 @@
 package com.josue.saleserverddd.infrastructure.configuration;
 
 import com.josue.saleserverddd.SaleServerApplication;
+import com.josue.saleserverddd.domain.events.UserNotification;
 import com.josue.saleserverddd.domain.repository.UserRepository;
 import com.josue.saleserverddd.domain.service.UserService;
 import com.josue.saleserverddd.domain.service.UserServiceImpl;
@@ -16,9 +17,10 @@ public class BeanConfiguration {
     @Bean
     public UserService userServiceBean(
             UserRepository userRepository,
-            UserFeignClient userFeignClient
+            UserFeignClient userFeignClient,
+            UserNotification userNotification
     ) {
-        return new UserServiceImpl(userRepository, userFeignClient);
+        return new UserServiceImpl(userRepository, userFeignClient, userNotification);
     }
 
 }
