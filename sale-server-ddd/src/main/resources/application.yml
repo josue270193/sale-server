@@ -32,6 +32,13 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true
+  rabbitmq:
+    listener:
+      simple:
+        acknowledge-mode: auto
+        retry:
+          enabled: true
+      type: simple
 
 management:
   health:
